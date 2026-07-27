@@ -1,10 +1,12 @@
-name : sample-code
+name: sample-code
 
-on : workflow-disptach
+on:
+  workflow_dispatch:
 
 jobs:
-  build :
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      -name : Hello-world
-       run: echo "Hi everyone"
+      - name: Hello-world
+        run: echo "Hi everyone"
