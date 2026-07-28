@@ -1,0 +1,11 @@
+name: Test Self-Hosted Runner
+
+on: push
+
+jobs:
+  test:
+    runs-on: self-hosted   # <-- this is the key line
+    steps:
+      - run: echo "Hello from my own EC2 runner!"
+      - run: hostname
+      - run: whoami
