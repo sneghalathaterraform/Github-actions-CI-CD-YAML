@@ -1,0 +1,22 @@
+name: Branch Condition Example
+
+on:
+  push:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Building..."
+
+  deploy:
+    needs: build
+
+    if: github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Deploying to Production..."
