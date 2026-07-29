@@ -1,0 +1,9 @@
+{
+  "name": "nodejs-ci-cd-practice",
+  "version": "1.0.0",
+  "description": "Practice app for GitHub Actions CI/CD pipeline",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  }
+}
