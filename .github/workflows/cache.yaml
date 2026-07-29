@@ -1,4 +1,4 @@
-name: simple-cache-example
+name: test-cache
 
 on: push
 
@@ -8,11 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Remember node_modules from last time
+      - name: Cache test
+        id: cache-test
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: npm-cache
+          key: npm-cache-demo
 
-      - name: Install packages
-        run: npm install
+      - name: Show cache hit or miss
+        run: echo "Cache hit? ${{ steps.cache-test.outputs.cache-hit }}"
+
+      - name: Install packages (only if package.json exists)
+        run: npm install || echo "no package.json, skipping"
