@@ -1,54 +1,55 @@
 name: NodeJs
 on:
-push:
-branches:
-- master
+  push:
+    branches:
+      - master
+      - main
+      - dev
+      - release
 
-- main
-- dev
-- release
 permissions:
-security-events: write
-issues: write
-actions: read
-contents: read
+  security-events: write
+  issues: write
+  actions: read
+  contents: read
+
 jobs:
-build:
-if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-runs-on: ubuntu-latest
-steps:
-- name: Checkout
-uses: actions/checkout@v4
-- name: Initialize CodeQL
-uses: github/codeql-action/init@v3
-with:
-languages: 'javascript-typescript'
-- name: Perform CodeQL Analysis
-uses: github/codeql-action/analyze@v3
-- name: Build
-run: npm install
-- name: Upload file as artifact
-uses: actions/upload-artifact@v4
-with:
-name: shared-data
-path: ~/.npm
+  build:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: 'javascript-typescript'
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+      - name: Build
+        run: npm install
+      - name: Upload file as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-data
+          path: ~/.npm
 
-test:
-runs-on: ubuntu-latest
-needs: build
-steps:
-- name: Checkout
-uses: actions/checkout@v4
-- name: Build
-run: npm install
-- name: Test
-run: npm test
-deploy:
-runs-on: ubuntu-latest
-needs: test
-steps:
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: npm install
+      - name: Test
+        run: npm test
 
-- name: Checkout
-uses: actions/checkout@v4
-- name: Deploy
-run: echo "My code is deployed !!"
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy
+        run: echo "My code is deployed !!"
