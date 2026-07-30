@@ -1,0 +1,36 @@
+name: Reusable - Build and Test
+
+# workflow_call means: "I am not meant to be run directly.
+# Other workflows will call ME using 'uses:'"
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment to build for'
+        required: true
+        type: string
+    secrets:
+      api_key:
+        description: 'API key needed for the build'
+        required: false
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show what we received from the caller
+        run: echo "Building for environment: ${{ inputs.environment }}"
+
+      - name: Use the secret (safely, never print it directly)
+        run: |
+          if [ -n "${{ secrets.api_key }}" ]; then
+            echo "API key was received (length check only, not printing it)"
+          else
+            echo "No API key was passed in"
+          fi
+
+      - name: Pretend to build
+        run: echo "Running build steps..."
+
+      - name: Pretend to test
+        run: echo "Running test steps..."
