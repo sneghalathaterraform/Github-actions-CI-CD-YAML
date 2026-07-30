@@ -1,0 +1,54 @@
+name: Inputs Variables Practice
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+        default: dev
+
+      version:
+        description: "Application version"
+        required: true
+        type: string
+
+      skip_tests:
+        description: "Skip tests?"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show inputs
+        run: |
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Version: ${{ github.event.inputs.version }}"
+          echo "Skip Tests: ${{ github.event.inputs.skip_tests }}"
+
+      - name: Run tests
+        if: ${{ github.event.inputs.skip_tests == 'false' }}
+        run: echo "Running tests..."
+
+      - name: Skip tests warning
+        if: ${{ github.event.inputs.skip_tests == 'true' }}
+        run: echo "Tests skipped."
+
+      - name: Deploy
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "prod" ]; then
+            echo "Deploying to Production"
+          elif [ "${{ github.event.inputs.environment }}" = "staging" ]; then
+            echo "Deploying to Staging"
+          else
+            echo "Deploying to Dev"
+          fi
