@@ -1,0 +1,25 @@
+name: Caller - Trigger Reusable Workflow
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to build for'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+        default: dev
+ 
+jobs:
+  call-build-test:
+    # This is the key line: instead of writing steps here,
+    # we point to the OTHER workflow file and pass it inputs.
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      environment: ${{ inputs.environment }}
+    secrets:
+      api_key: ${{ secrets.MY_API_KEY }}
+ 
