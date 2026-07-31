@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show inputs
-        run: echo "Building for environment: ${{ inputs.environment }}"
+        run: echo "Building for environment"
       - name: Check secret
         run: |
           if [ -n "${{ secrets.api_key }}" ]; then
