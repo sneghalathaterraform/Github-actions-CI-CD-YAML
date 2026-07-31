@@ -18,7 +18,6 @@ jobs:
     steps:
       - name: Show inputs
         run: echo "Building for environment: ${{ inputs.environment }}"
-
       - name: Check secret
         run: |
           if [ -n "${{ secrets.api_key }}" ]; then
