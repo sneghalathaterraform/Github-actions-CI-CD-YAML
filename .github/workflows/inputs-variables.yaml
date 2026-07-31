@@ -14,7 +14,7 @@ on:
         default: dev
 
       version:
-        description: "Application version"
+        description: "Application version -1"
         required: true
         type: string
 
