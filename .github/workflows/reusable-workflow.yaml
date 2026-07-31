@@ -9,7 +9,7 @@ on:
         type: string
     secrets:
       api_key:
-        description: 'API key needed for the build'
+        description: 'API key needed for the building'
         required: false
 
 jobs:
