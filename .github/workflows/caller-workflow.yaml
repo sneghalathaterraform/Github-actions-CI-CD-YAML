@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to build for'
+        description: 'Environment to build for use'
         required: true
         type: choice
         options:
